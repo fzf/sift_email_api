@@ -253,6 +253,34 @@ class SiftEmailApi
 		execute_request(request)
 	end
 
+	# Get connect token for user
+	#
+	# @param username [String]	username of the new user
+	# @return [Integer]	the numeric user id of the newly created user
+	def connect_token(username)
+		path = '/v1/connect_token'
+		params = {'username' => username}
+
+		add_common_params('POST', path, params)
+
+		request = Net::HTTP::Post.new path
+		request.set_form_data params
+
+		execute_request(request)
+	end
+
+	# Get connect email url
+	#
+	# @param username [String]	username of the new user
+	# @param connect_token [String]	token from connect token method
+	# @return [Integer]	the numeric user id of the newly created user
+	def connect_email_url(username, connect_token, callback_url)
+		"https://api.edison.tech/v1/connect_email?" \
+			"api_key=#{@api_key}&" \
+			"username=#{username}&" \
+			"token=#{connect_token}"
+	end
+
 	# Used to notify the Sift development team of emails that were not parsed correctly
 	#
 	# @param eml_str [String]	the eml file
