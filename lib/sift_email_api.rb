@@ -76,9 +76,9 @@ class SiftEmailApi
 	# @param username [String]	username of the user to fetch sifts for
 	# @param sift_id [Integer]	numeric id of the sift to be fetched
 	# @return [Hash]	the sift corresponding to the provided id, available fields (by domain) documented here: {https://developer.easilydo.com/sift/documentation#flights}
-	def get_sift(username, sift_id)
+	def get_sift(username, sift_id, eml=false)
 		path = '/v1/users/%s/sifts/%d' % [username, sift_id]
-		params = {}
+		params = eml ? {'include_eml' => 1} : {}
 
 		add_common_params('GET', path, params)
 
